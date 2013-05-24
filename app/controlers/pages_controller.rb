@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
-  def index
-  end
+	def index
+@links = Link.order('created_at DESC')
+end
 end

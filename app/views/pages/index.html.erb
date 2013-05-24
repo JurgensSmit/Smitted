@@ -1,1 +1,6 @@
-stuff
+<ul>
+  <% @links.each do |link| %>
+            <%= link_to link.title, link.url %>
+                <br>
+  <% end %>
+</ul>
