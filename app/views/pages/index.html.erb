@@ -1,7 +1,7 @@
-<ul>
-  <% @links.each do |link| %>
-            <%= link_to link.title, link.url %>
-                <br>
-  <% end %>
-  </ul>
-  <%= will_paginate @links %>
+ <ul>
+   <% @links.each do |link| %>
+     <li><%= link_to link.title, link.url %></li>
+     <%= link_to "comments", link %>
+   <% end %>
+ </ul>
+ <%= will_paginate(@links) %> 
