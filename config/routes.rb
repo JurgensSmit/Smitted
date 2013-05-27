@@ -1,9 +1,11 @@
 Smitted::Application.routes.draw do
 
   devise_for :users
-resources :links
+  resources :links
   resources :pages
+  resources :comments
   root :to => "pages#index"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
