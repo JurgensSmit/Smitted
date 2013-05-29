@@ -4,6 +4,7 @@ Smitted::Application.routes.draw do
   resources :links
   resources :pages
   resources :comments
+  resources :votes, :only => [:create]
   root :to => "pages#index"
   
   # The priority is based upon order of creation:
