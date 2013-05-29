@@ -1,11 +1,12 @@
-<%= link_to "Add a link", new_link_path %>
-<ul>
+
   <% @links.each do |link| %>
-   <li><%= link_to link.title, link.url %>
-   <%= link_to "+", votes_path(:vote => {:link_id => link.id, :up => true}), :method => :post %>
-   <%= link_to "-", votes_path(:vote => {:link_id => link.id, :up => false}), :method => :post %></li>
-   Votes: <%= link.votes.where(:up=> true).count - link.votes.where(:up=> false).count %>
-   <%= link_to "comments", link %>
+
+   <strong><li><%= link_to link.title, link.url %></li> 
+<%= link_to "+", votes_path(:vote => {:link_id => link.id, :up => true}), :method => :post %>
+   <%= link_to "-", votes_path(:vote => {:link_id => link.id, :up => false}), :method => :post %> |</strong>
+
+            <%= pluralize(link.votes.where(:up => true).count, "vote") %> |
+            <%= link_to "#{pluralize(link.comments.count, "comment")}", link %>
   <% end %>
-</ul>
+
 <%= will_paginate(@links) %>

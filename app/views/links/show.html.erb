@@ -1,44 +1,66 @@
-<h1>Links</h1>
-
-<p>
-<b>Title:</b>
+<h3>
 <%= @link.title %>
-</p>
+</h3>
 
-<p>
-<b>url:</b>
-<%= @link.url %>
-</p>
+<h3>
+<%= link_to @link.url, @link.url %>
+</h3>
 
-<h2>Comments:</h2>
+<ul class="unstyled">
+  <li class="traffic_data">
+    <%= pluralize(@link.votes.where(:up => true).count, "vote") %> by
+    <%= User.find(@link.user_id).email %>
+  </li>
+  <li>
+    <% if current_user %>
+      <% if current_user.id == @link.user_id %>
+        <%= button_to "| delete", link_path, :method => :delete, class: "delete_link" %>
+      <% end %>
+    <% end %>
+  </li>
+</ul>
+
+<h2 class="show_link comment comment_title">Comments:</h2>
 <div>
-<% @link.comments.each do |comment| %>
-<p><%= comment.message %></p>
-<p style="font-size:12px;">posted by <%= User.find(comment.user_id).email %></p>
-<% end %>
+  <ul class="unstyled">
+   <% @link.comments.each do |comment| %>
+   <li class="comment"><%= comment.message %></li>
+   <li class="comment_time">posted <%= time_ago_in_words(comment.created_at) %> ago by <%= User.find(comment.user_id).email %></li>
+      <li>
+      <% if current_user %>
+        <% if current_user.id == comment.user_id %>
+          <%= button_to "| delete", comment, :method => :delete, class: "delete_link_comment" %>
+        <% end %>
+      <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>
 
-<%= form_for(@comment) do |f| %>
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+<div class="add_comment">
+  <%= form_for(@comment) do |f| %>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
-      <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.text_area :message, placeholder: "Add a comment" %>
+    </div>
+    <div class="field">
+     <%= f.hidden_field :link_id, value: @link.id %>
+   </div>
+    <div class="actions">
+      <%= f.submit %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :message %><br />
-    <%= f.text_area :message, :placeholder => "Add a comment" %>
-  </div>
-  <div class="field">
-   <%= f.hidden_field :link_id, :value => @link.id %>
 </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+
+

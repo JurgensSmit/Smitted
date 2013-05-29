@@ -1,10 +1,24 @@
 class LinksController < ApplicationController
-  def show
-    @link = Link.find(params[:id])
-    @comment = Comment.new 
+  before_filter :get_post, :only => [:show, :edit, :update, :destroy]
+  before_filter :check_user, :only => [:edit,:update,:destroy]
+
+  def check_user
+    if current_user.id != @link.user_id
+      flash[:notice] = "Sorry, you can't edit someone else's post"
+      redirect_to link_path
+    end
   end
 
-def new
+  def get_post
+    @link = Link.find(params[:id])
+  end
+
+  def show
+   @link = Link.find(params[:id])
+   @comment = Comment.new
+  end
+
+  def new
    @link = Link.new
   end
 
@@ -26,4 +40,4 @@ end
     Link.find(params[:id]).destroy
     redirect_to root_url
   end
-  end
+end

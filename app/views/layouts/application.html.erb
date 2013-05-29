@@ -13,6 +13,7 @@
 			<a href="/" style="font-family: 'Sarina', cursive; font-size: 35px; color: #FFF;" class="brand">Smitted</a>
 			<ul class='nav pull-right'>
 				<% if current_user.present? %>
+				<%= link_to "Add a link", new_link_path %> |
 				<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
 				<% else %>
 				<%= link_to 'Sign In', new_user_session_path %></li> |
@@ -21,7 +22,7 @@
 			</ul>
 		</div>
 		      <div class="container">
-				<div class="span4 offset3">
+				<div class="span6 offset3">
 	                     <%= render 'layouts/messages' %>
 					<%= yield %>
 				</div> 
