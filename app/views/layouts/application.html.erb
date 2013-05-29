@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Smitted</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<% if current_user.present? %>
-<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %>
-<% else %>
-<%= link_to 'Sign In', new_user_session_path %>
-<%= link_to 'Register Now!' , new_user_registration_path %>
-<% end %>
-	
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-<%= yield %>
-
-</body>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title><%= content_for?(:title) ? yield(:title) : "Smitted" %></title>
+		<%= stylesheet_link_tag "application", :media => "all" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+		<%= yield(:head) %>
+	</head>
+	<body>
+		<div class="container">
+			<a href="/" style="font-family: 'Sarina', cursive; font-size: 35px; color: #FFF;" class="brand">Smitted</a>
+			<ul class='nav pull-right'>
+				<% if current_user.present? %>
+				<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
+				<% else %>
+				<%= link_to 'Sign In', new_user_session_path %></li> |
+				<%= link_to 'Register Now!', new_user_registration_path %></li>
+				<% end %>
+			</ul>
+		</div>
+		      <div class="container">
+				<div class="span4 offset3">
+	                     <%= render 'layouts/messages' %>
+					<%= yield %>
+				</div> 
+			</div> 
+	</body>
 </html>
