@@ -1,7 +1,7 @@
 
   <% @links.each do |link| %>
 
-   <strong><li> <%= link_to link.title, link.url, target: "_blank" %> </li> 
+   <strong><li> <%= link_to link.title, url_with_protocol(link.url), target: "_blank" %> </li> 
 <%= link_to "+", votes_path(:vote => {:link_id => link.id, :up => true}), :method => :post %>
    <%= link_to "-", votes_path(:vote => {:link_id => link.id, :up => false}), :method => :post %> |</strong>
 
@@ -10,3 +10,4 @@
   <% end %>
 
 <%= will_paginate(@links) %>
+
