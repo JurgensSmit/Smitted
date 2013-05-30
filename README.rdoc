@@ -1,3 +1,3 @@
-Reddit clone.
+Reddit clone
 
-http://smitted.herokuapp.com/
+http://Smitted.herokuapp.com
